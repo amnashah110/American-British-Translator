@@ -7,30 +7,23 @@ const translateHandler = async () => {
   errorArea.innerText = "";
   translatedArea.innerText = "";
 
-  try {
-    const response = await fetch("/api/translate", {
-      method: "POST",
-      headers: {
-        "Accept": "application/json",
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ text: textArea.value, locale: localeArea.value })
-    });
+  const data = await fetch("/api/translate", {
+    method: "POST",
+    headers: {
+      "Accept": "application/json",
+      "Content-type": "application/json"
+    },
+    body: JSON.stringify({"text": textArea.value, "locale": localeArea.value})
+  });
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-
-    const parsed = await response.json();
-
-    if (parsed.error) {
-      errorArea.innerText = parsed.error;
-    } else {
-      translatedArea.innerHTML = parsed.translation;
-    }
-  } catch (error) {
-    errorArea.innerText = `An error occurred: ${error.message}`;
+  const parsed = await data.json();
+  if (parsed.error) {
+    errorArea.innerText = JSON.stringify(parsed);
+    return;
   }
+
+  translatedArea.innerHTML = parsed.translation;
+  return;
 };
 
-document.getElementById("translate-btn").addEventListener("click", translateHandler);
+document.getElementById("translate-btn").addEventListener("click", translateHandler)
