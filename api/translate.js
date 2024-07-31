@@ -1,4 +1,4 @@
-import Translator from '../../components/translator'; 
+import Translator from '../components/translator'; 
 
 export default async function handler(req, res) {
   const translator = new Translator();
