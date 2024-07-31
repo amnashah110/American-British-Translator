@@ -6,7 +6,7 @@ module.exports = function (app) {
   
   const translator = new Translator();
 
-  app.route('/')
+  app.route('/api/translate')
     .post((req, res) => {
       let translatedText = '';
       const { text, locale } = req.body;
